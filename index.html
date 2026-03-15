@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Места на карте</title>
+
+<style>
+body{
+font-family: Arial;
+margin:0;
+background:#f4f6f8;
+}
+
+h1{
+text-align:center;
+padding:10px;
+}
+
+.buttons{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+padding:10px;
+justify-content:center;
+}
+
+button{
+padding:10px 14px;
+border:none;
+border-radius:8px;
+background:#2b7cff;
+color:white;
+font-size:16px;
+}
+
+.map{
+width:100%;
+height:80vh;
+border:none;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Интересные места</h1>
+
+<div class="buttons">
+
+<button onclick="showPlace('Fethiye Marina')">
+Марина Фетхие
+</button>
+
+<button onclick="showPlace('Oludeniz Beach')">
+Пляж Олюдениз
+</button>
+
+<button onclick="showPlace('Kayakoy')">
+Каякёй
+</button>
+
+<button onclick="showPlace('Saklikent Gorge')">
+Каньон Саклыкент
+</button>
+
+</div>
+
+<iframe id="map" class="map"
+src="https://maps.google.com/maps?q=Fethiye&t=&z=13&ie=UTF8&iwloc=&output=embed">
+</iframe>
+
+<script>
+
+function showPlace(place){
+document.getElementById("map").src =
+"https://maps.google.com/maps?q=" + place + "&z=14&output=embed";
+}
+
+</script>
+
+</body>
+</html>
