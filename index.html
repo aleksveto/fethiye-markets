@@ -3,49 +3,33 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Рынки Фетхие</title>
 
 <style>
 
 body{
-font-family:Arial;
 margin:0;
-background:#f4f6f8;
+font-family:Arial;
 }
 
 h1{
 text-align:center;
-font-size:22px;
 margin:10px;
+font-size:22px;
 }
 
 #map{
+height:75vh;
 width:100%;
-height:60vh;
-border:none;
 }
 
-.menu{
-padding:10px;
-display:flex;
-flex-direction:column;
-gap:8px;
-}
-
-button{
-padding:12px;
-border:none;
-border-radius:8px;
-background:#2b7cff;
-color:white;
-font-size:16px;
-}
-
-.route{
-background:#34a853;
+.info{
+text-align:center;
+padding:8px;
+font-size:14px;
 }
 
 </style>
@@ -54,110 +38,162 @@ background:#34a853;
 
 <body>
 
-<h1>Рынки Фетхие</h1>
+<h1>Рынки Фетхие по дням недели</h1>
 
-<iframe id="map"
-src="https://www.google.com/maps?q=fethiye&output=embed"></iframe>
+<div id="map"></div>
 
-
-<div class="menu">
-
-<button onclick="showMarket('https://maps.app.goo.gl/J4Q1PncEETmQRBEW6')">
-Понедельник
-</button>
-
-<button onclick="showMarket('https://maps.app.goo.gl/JZbgWc18sW277ZUx6')">
-Вторник
-</button>
-
-<button onclick="showMarket('https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7')">
-Четверг — Патлангыч
-</button>
-
-<button onclick="showMarket('https://maps.app.goo.gl/aaFgXknuASujo5Lb6')">
-Четверг — Чифтлик
-</button>
-
-<button onclick="showMarket('https://maps.app.goo.gl/JZbgWc18sW277ZUx6')">
-Пятница
-</button>
-
-<button onclick="showMarket('https://maps.app.goo.gl/XXtjQJLaYwMVeCve9')">
-Суббота — Пазарьери
-</button>
-
-<button onclick="showMarket('https://maps.app.goo.gl/B576Emx2e5BHqqkh8')">
-Суббота — Чамкёй
-</button>
-
-<button onclick="showMarket('https://maps.app.goo.gl/yu5NGyyUathdK2ii8')">
-Воскресенье
-</button>
-
-<button onclick="todayMarket()">
-Сегодняшний рынок
-</button>
-
+<div class="info">
+Нажмите на метку для описания и маршрута
 </div>
-
-
 
 <script>
 
-function showMarket(link){
+function initMap(){
 
-document.getElementById("map").src =
-link.replace("maps.app.goo.gl","www.google.com/maps") + "&output=embed";
+var center = {lat:36.621, lng:29.116};
 
+var map = new google.maps.Map(document.getElementById("map"),{
+zoom:12,
+center:center
+});
+
+var today = new Date().getDay();
+
+var markets=[
+
+{
+day:1,
+title:"Понедельник",
+coords:{lat:36.62158,lng:29.11556},
+link:"https://maps.app.goo.gl/J4Q1PncEETmQRBEW6",
+desc:"Большой центральный рынок."
+},
+
+{
+day:2,
+title:"Вторник",
+coords:{lat:36.63261,lng:29.11502},
+link:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
+desc:"Популярный рынок."
+},
+
+{
+day:4,
+title:"Четверг — Патлангыч",
+coords:{lat:36.64075,lng:29.12394},
+link:"https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7",
+desc:"Районный рынок."
+},
+
+{
+day:4,
+title:"Четверг — Чифтлик",
+coords:{lat:36.66578,lng:29.05536},
+link:"https://maps.app.goo.gl/aaFgXknuASujo5Lb6",
+desc:"Рынок района Чифтлик."
+},
+
+{
+day:5,
+title:"Пятница",
+coords:{lat:36.63261,lng:29.11502},
+link:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
+desc:"Овощи и текстиль."
+},
+
+{
+day:6,
+title:"Суббота — Пазарьери",
+coords:{lat:36.62158,lng:29.11556},
+link:"https://maps.app.goo.gl/XXtjQJLaYwMVeCve9",
+desc:"Крупный рынок."
+},
+
+{
+day:6,
+title:"Суббота — Чамкёй",
+coords:{lat:36.64840,lng:29.15850},
+link:"https://maps.app.goo.gl/B576Emx2e5BHqqkh8",
+desc:"Рынок района Чамкёй."
+},
+
+{
+day:0,
+title:"Воскресенье",
+coords:{lat:36.61470,lng:29.10320},
+link:"https://maps.app.goo.gl/yu5NGyyUathdK2ii8",
+desc:"Воскресный рынок."
 }
+
+];
+
+markets.forEach(function(m){
+
+var color = (m.day==today) ? "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                           : "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+
+var marker = new google.maps.Marker({
+
+position:m.coords,
+map:map,
+title:m.title,
+icon:color
+
+});
+
+var info = new google.maps.InfoWindow({
+
+content:
+"<b>"+m.title+"</b><br>"+m.desc+
+"<br><br><a href='"+m.link+"' target='_blank'>Маршрут</a>"
+
+});
+
+marker.addListener("click",function(){
+
+info.open(map,marker);
+
+});
+
+});
 
 
 /* ===== БЛОК ГЕОЛОКАЦИИ =====
-   его можно полностью удалить
+его можно удалить полностью
 */
-
-function showMyLocation(){
 
 if(navigator.geolocation){
 
 navigator.geolocation.getCurrentPosition(function(pos){
 
-var lat = pos.coords.latitude;
-var lon = pos.coords.longitude;
+var myPos={
+lat:pos.coords.latitude,
+lng:pos.coords.longitude
+};
 
-document.getElementById("map").src =
-"https://www.google.com/maps?q="+lat+","+lon+"&z=14&output=embed";
+new google.maps.Marker({
+
+position:myPos,
+map:map,
+title:"Вы здесь",
+icon:"http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+
+});
 
 });
 
 }
 
-}
-
-/* ===== конец блока геолокации ===== */
-
-
-
-function todayMarket(){
-
-var day = new Date().getDay();
-
-var markets=[
-
-'https://maps.app.goo.gl/yu5NGyyUathdK2ii8',
-'https://maps.app.goo.gl/J4Q1PncEETmQRBEW6',
-'https://maps.app.goo.gl/JZbgWc18sW277ZUx6',
-'https://maps.app.goo.gl/JZbgWc18sW277ZUx6',
-'https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7',
-'https://maps.app.goo.gl/JZbgWc18sW277ZUx6',
-'https://maps.app.goo.gl/XXtjQJLaYwMVeCve9'
-
-];
-
-showMarket(markets[day]);
+/* ===== конец блока ===== */
 
 }
 
+</script>
+
+<!-- ВСТАВЬТЕ СЮДА API KEY -->
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
 </script>
 
 </body>
