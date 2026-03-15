@@ -8,6 +8,8 @@
 
 <title>Рынки Фетхие</title>
 
+<link href="https://cdn.jsdelivr.net/npm/ol@v9.2.4/ol.css" rel="stylesheet">
+
 <style>
 
 body{
@@ -26,10 +28,17 @@ height:75vh;
 width:100%;
 }
 
-.info{
-text-align:center;
-padding:8px;
+.popup{
+background:white;
+padding:6px 10px;
+border-radius:6px;
+box-shadow:0 2px 6px rgba(0,0,0,0.3);
 font-size:14px;
+}
+
+.today{
+color:#0a8a00;
+font-weight:bold;
 }
 
 </style>
@@ -38,162 +47,196 @@ font-size:14px;
 
 <body>
 
-<h1>Рынки Фетхие по дням недели</h1>
+<h1>Рынки Фетхие</h1>
 
 <div id="map"></div>
 
-<div class="info">
-Нажмите на метку для описания и маршрута
-</div>
+<script src="https://cdn.jsdelivr.net/npm/ol@v9.2.4/dist/ol.js"></script>
 
 <script>
 
-function initMap(){
-
-var center = {lat:36.621, lng:29.116};
-
-var map = new google.maps.Map(document.getElementById("map"),{
-zoom:12,
-center:center
-});
-
-var today = new Date().getDay();
+var today=new Date().getDay();
 
 var markets=[
 
 {
 day:1,
-title:"Понедельник",
-coords:{lat:36.62158,lng:29.11556},
+name:"Понедельник",
+coord:[29.11556,36.62158],
 link:"https://maps.app.goo.gl/J4Q1PncEETmQRBEW6",
-desc:"Большой центральный рынок."
+desc:"Большой центральный рынок"
 },
 
 {
 day:2,
-title:"Вторник",
-coords:{lat:36.63261,lng:29.11502},
+name:"Вторник",
+coord:[29.11502,36.63261],
 link:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
-desc:"Популярный рынок."
+desc:"Популярный рынок"
 },
 
 {
 day:4,
-title:"Четверг — Патлангыч",
-coords:{lat:36.64075,lng:29.12394},
+name:"Четверг — Патлангыч",
+coord:[29.12394,36.64075],
 link:"https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7",
-desc:"Районный рынок."
+desc:"Районный рынок"
 },
 
 {
 day:4,
-title:"Четверг — Чифтлик",
-coords:{lat:36.66578,lng:29.05536},
+name:"Четверг — Чифтлик",
+coord:[29.05536,36.66578],
 link:"https://maps.app.goo.gl/aaFgXknuASujo5Lb6",
-desc:"Рынок района Чифтлик."
+desc:"Рынок района Чифтлик"
 },
 
 {
 day:5,
-title:"Пятница",
-coords:{lat:36.63261,lng:29.11502},
+name:"Пятница",
+coord:[29.11502,36.63261],
 link:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
-desc:"Овощи и текстиль."
+desc:"Овощи и текстиль"
 },
 
 {
 day:6,
-title:"Суббота — Пазарьери",
-coords:{lat:36.62158,lng:29.11556},
+name:"Суббота — Пазарьери",
+coord:[29.11556,36.62158],
 link:"https://maps.app.goo.gl/XXtjQJLaYwMVeCve9",
-desc:"Крупный рынок."
+desc:"Крупный рынок"
 },
 
 {
 day:6,
-title:"Суббота — Чамкёй",
-coords:{lat:36.64840,lng:29.15850},
+name:"Суббота — Чамкёй",
+coord:[29.15850,36.64840],
 link:"https://maps.app.goo.gl/B576Emx2e5BHqqkh8",
-desc:"Рынок района Чамкёй."
+desc:"Рынок района Чамкёй"
 },
 
 {
 day:0,
-title:"Воскресенье",
-coords:{lat:36.61470,lng:29.10320},
+name:"Воскресенье",
+coord:[29.10320,36.61470],
 link:"https://maps.app.goo.gl/yu5NGyyUathdK2ii8",
-desc:"Воскресный рынок."
+desc:"Воскресный рынок"
 }
 
 ];
 
+var features=[];
+
 markets.forEach(function(m){
 
-var color = (m.day==today) ? "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
-                           : "http://maps.google.com/mapfiles/ms/icons/red-dot.png";
+var feature=new ol.Feature({
 
-var marker = new google.maps.Marker({
+geometry:new ol.geom.Point(
+ol.proj.fromLonLat(m.coord)
+),
 
-position:m.coords,
-map:map,
-title:m.title,
-icon:color
+data:m
 
 });
 
-var info = new google.maps.InfoWindow({
-
-content:
-"<b>"+m.title+"</b><br>"+m.desc+
-"<br><br><a href='"+m.link+"' target='_blank'>Маршрут</a>"
+features.push(feature);
 
 });
 
-marker.addListener("click",function(){
+var vectorSource=new ol.source.Vector({
 
-info.open(map,marker);
-
-});
+features:features
 
 });
 
+var vectorLayer=new ol.layer.Vector({
 
-/* ===== БЛОК ГЕОЛОКАЦИИ =====
-его можно удалить полностью
-*/
+source:vectorSource,
 
-if(navigator.geolocation){
+style:function(feature){
 
-navigator.geolocation.getCurrentPosition(function(pos){
+var d=feature.get("data");
 
-var myPos={
-lat:pos.coords.latitude,
-lng:pos.coords.longitude
-};
+var color=(d.day==today)?"green":"red";
 
-new google.maps.Marker({
+return new ol.style.Style({
 
-position:myPos,
-map:map,
-title:"Вы здесь",
-icon:"http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+image:new ol.style.Circle({
 
-});
+radius:7,
+
+fill:new ol.style.Fill({color:color}),
+
+stroke:new ol.style.Stroke({color:"#fff",width:2})
+
+})
 
 });
 
 }
 
-/* ===== конец блока ===== */
+});
 
-}
+var map=new ol.Map({
 
-</script>
+target:"map",
 
-<!-- ВСТАВЬТЕ СЮДА API KEY -->
+layers:[
 
-<script async defer
-src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+new ol.layer.Tile({
+
+source:new ol.source.OSM()
+
+}),
+
+vectorLayer
+
+],
+
+view:new ol.View({
+
+center:ol.proj.fromLonLat([29.11,36.62]),
+
+zoom:12
+
+})
+
+});
+
+map.on("click",function(evt){
+
+map.forEachFeatureAtPixel(evt.pixel,function(feature){
+
+var d=feature.get("data");
+
+var html=
+
+"<div class='popup'>"+
+
+"<b class='"+(d.day==today?"today":"")+"'>"+d.name+"</b><br>"+
+
+d.desc+
+
+"<br><br><a href='"+d.link+"' target='_blank'>Маршрут</a>"+
+
+"</div>";
+
+var overlay=new ol.Overlay({
+
+element:document.createElement("div"),
+
+position:evt.coordinate
+
+});
+
+overlay.getElement().innerHTML=html;
+
+map.addOverlay(overlay);
+
+});
+
+});
+
 </script>
 
 </body>
