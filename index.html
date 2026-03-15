@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Рынки Фетхие по дням недели</title>
+<title>Рынки Фетхие</title>
 
 <style>
 
@@ -83,9 +83,9 @@ border:none;
 
 <div class="item">
 <div class="day">Понедельник</div>
-<div class="desc">Описание рынка можно написать здесь.</div>
+<div class="desc">Описание рынка.</div>
 <div class="buttons">
-<button onclick="show('https://maps.app.goo.gl/J4Q1PncEETmQRBEW6')">Показать на карте</button>
+<button onclick="show('Fethiye Monday Market')">Показать на карте</button>
 <button class="route" onclick="route('https://maps.app.goo.gl/J4Q1PncEETmQRBEW6')">Маршрут</button>
 </div>
 </div>
@@ -94,7 +94,7 @@ border:none;
 <div class="day">Вторник</div>
 <div class="desc">Описание рынка.</div>
 <div class="buttons">
-<button onclick="show('https://maps.app.goo.gl/JZbgWc18sW277ZUx6')">Показать на карте</button>
+<button onclick="show('Fethiye Tuesday Market')">Показать на карте</button>
 <button class="route" onclick="route('https://maps.app.goo.gl/JZbgWc18sW277ZUx6')">Маршрут</button>
 </div>
 </div>
@@ -103,7 +103,7 @@ border:none;
 <div class="day">Четверг — Патлангыч</div>
 <div class="desc">Описание рынка.</div>
 <div class="buttons">
-<button onclick="show('https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7')">Показать на карте</button>
+<button onclick="show('Patlangic Pazari Fethiye')">Показать на карте</button>
 <button class="route" onclick="route('https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7')">Маршрут</button>
 </div>
 </div>
@@ -112,7 +112,7 @@ border:none;
 <div class="day">Четверг — Чифтлик</div>
 <div class="desc">Описание рынка.</div>
 <div class="buttons">
-<button onclick="show('https://maps.app.goo.gl/aaFgXknuASujo5Lb6')">Показать на карте</button>
+<button onclick="show('Ciftlik Pazari Fethiye')">Показать на карте</button>
 <button class="route" onclick="route('https://maps.app.goo.gl/aaFgXknuASujo5Lb6')">Маршрут</button>
 </div>
 </div>
@@ -121,7 +121,7 @@ border:none;
 <div class="day">Пятница</div>
 <div class="desc">Описание рынка.</div>
 <div class="buttons">
-<button onclick="show('https://maps.app.goo.gl/JZbgWc18sW277ZUx6')">Показать на карте</button>
+<button onclick="show('Fethiye Friday Market')">Показать на карте</button>
 <button class="route" onclick="route('https://maps.app.goo.gl/JZbgWc18sW277ZUx6')">Маршрут</button>
 </div>
 </div>
@@ -130,7 +130,7 @@ border:none;
 <div class="day">Суббота — Пазарьери</div>
 <div class="desc">Описание рынка.</div>
 <div class="buttons">
-<button onclick="show('https://maps.app.goo.gl/XXtjQJLaYwMVeCve9')">Показать на карте</button>
+<button onclick="show('Pazaryeri Market Fethiye')">Показать на карте</button>
 <button class="route" onclick="route('https://maps.app.goo.gl/XXtjQJLaYwMVeCve9')">Маршрут</button>
 </div>
 </div>
@@ -139,7 +139,7 @@ border:none;
 <div class="day">Суббота — Чамкёй</div>
 <div class="desc">Описание рынка.</div>
 <div class="buttons">
-<button onclick="show('https://maps.app.goo.gl/B576Emx2e5BHqqkh8')">Показать на карте</button>
+<button onclick="show('Camkoy Pazari Fethiye')">Показать на карте</button>
 <button class="route" onclick="route('https://maps.app.goo.gl/B576Emx2e5BHqqkh8')">Маршрут</button>
 </div>
 </div>
@@ -148,23 +148,26 @@ border:none;
 <div class="day">Воскресенье</div>
 <div class="desc">Описание рынка.</div>
 <div class="buttons">
-<button onclick="show('https://maps.app.goo.gl/yu5NGyyUathdK2ii8')">Показать на карте</button>
+<button onclick="show('Sunday Market Fethiye')">Показать на карте</button>
 <button class="route" onclick="route('https://maps.app.goo.gl/yu5NGyyUathdK2ii8')">Маршрут</button>
 </div>
 </div>
 
 </div>
 
-<iframe id="map" class="map"></iframe>
+<iframe id="map" class="map"
+src="https://maps.google.com/maps?q=Fethiye&z=13&output=embed">
+</iframe>
 
 <script>
 
-function show(link){
-document.getElementById("map").src = link + "&output=embed";
+function show(place){
+document.getElementById("map").src =
+"https://maps.google.com/maps?q=" + encodeURIComponent(place) + "&z=15&output=embed";
 }
 
 function route(link){
-window.open(link, "_blank");
+window.open(link,"_blank");
 }
 
 </script>
