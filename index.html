@@ -2,79 +2,169 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Места на карте</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Рынки Фетхие по дням недели</title>
 
 <style>
+
 body{
-font-family: Arial;
+font-family: Arial, sans-serif;
 margin:0;
 background:#f4f6f8;
 }
 
 h1{
 text-align:center;
+padding:12px;
+margin:0;
+font-size:22px;
+}
+
+.list{
 padding:10px;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.item{
+background:white;
+border-radius:10px;
+padding:12px;
+box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+
+.day{
+font-size:18px;
+font-weight:bold;
+margin-bottom:6px;
+}
+
+.desc{
+font-size:14px;
+margin-bottom:10px;
+color:#444;
 }
 
 .buttons{
 display:flex;
-flex-wrap:wrap;
 gap:8px;
-padding:10px;
-justify-content:center;
 }
 
 button{
-padding:10px 14px;
+flex:1;
+padding:12px;
+font-size:16px;
 border:none;
 border-radius:8px;
 background:#2b7cff;
 color:white;
-font-size:16px;
+}
+
+.route{
+background:#34a853;
 }
 
 .map{
 width:100%;
-height:80vh;
+height:45vh;
 border:none;
 }
+
 </style>
 
 </head>
 
 <body>
 
-<h1>Интересные места</h1>
+<h1>Рынки Фетхие</h1>
 
+<div class="list">
+
+<div class="item">
+<div class="day">Понедельник</div>
+<div class="desc">Описание рынка можно написать здесь.</div>
 <div class="buttons">
+<button onclick="show('https://maps.app.goo.gl/J4Q1PncEETmQRBEW6')">Показать на карте</button>
+<button class="route" onclick="route('https://maps.app.goo.gl/J4Q1PncEETmQRBEW6')">Маршрут</button>
+</div>
+</div>
 
-<button onclick="showPlace('Fethiye Marina')">
-Марина Фетхие
-</button>
+<div class="item">
+<div class="day">Вторник</div>
+<div class="desc">Описание рынка.</div>
+<div class="buttons">
+<button onclick="show('https://maps.app.goo.gl/JZbgWc18sW277ZUx6')">Показать на карте</button>
+<button class="route" onclick="route('https://maps.app.goo.gl/JZbgWc18sW277ZUx6')">Маршрут</button>
+</div>
+</div>
 
-<button onclick="showPlace('Oludeniz Beach')">
-Пляж Олюдениз
-</button>
+<div class="item">
+<div class="day">Четверг — Патлангыч</div>
+<div class="desc">Описание рынка.</div>
+<div class="buttons">
+<button onclick="show('https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7')">Показать на карте</button>
+<button class="route" onclick="route('https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7')">Маршрут</button>
+</div>
+</div>
 
-<button onclick="showPlace('Kayakoy')">
-Каякёй
-</button>
+<div class="item">
+<div class="day">Четверг — Чифтлик</div>
+<div class="desc">Описание рынка.</div>
+<div class="buttons">
+<button onclick="show('https://maps.app.goo.gl/aaFgXknuASujo5Lb6')">Показать на карте</button>
+<button class="route" onclick="route('https://maps.app.goo.gl/aaFgXknuASujo5Lb6')">Маршрут</button>
+</div>
+</div>
 
-<button onclick="showPlace('Saklikent Gorge')">
-Каньон Саклыкент
-</button>
+<div class="item">
+<div class="day">Пятница</div>
+<div class="desc">Описание рынка.</div>
+<div class="buttons">
+<button onclick="show('https://maps.app.goo.gl/JZbgWc18sW277ZUx6')">Показать на карте</button>
+<button class="route" onclick="route('https://maps.app.goo.gl/JZbgWc18sW277ZUx6')">Маршрут</button>
+</div>
+</div>
+
+<div class="item">
+<div class="day">Суббота — Пазарьери</div>
+<div class="desc">Описание рынка.</div>
+<div class="buttons">
+<button onclick="show('https://maps.app.goo.gl/XXtjQJLaYwMVeCve9')">Показать на карте</button>
+<button class="route" onclick="route('https://maps.app.goo.gl/XXtjQJLaYwMVeCve9')">Маршрут</button>
+</div>
+</div>
+
+<div class="item">
+<div class="day">Суббота — Чамкёй</div>
+<div class="desc">Описание рынка.</div>
+<div class="buttons">
+<button onclick="show('https://maps.app.goo.gl/B576Emx2e5BHqqkh8')">Показать на карте</button>
+<button class="route" onclick="route('https://maps.app.goo.gl/B576Emx2e5BHqqkh8')">Маршрут</button>
+</div>
+</div>
+
+<div class="item">
+<div class="day">Воскресенье</div>
+<div class="desc">Описание рынка.</div>
+<div class="buttons">
+<button onclick="show('https://maps.app.goo.gl/yu5NGyyUathdK2ii8')">Показать на карте</button>
+<button class="route" onclick="route('https://maps.app.goo.gl/yu5NGyyUathdK2ii8')">Маршрут</button>
+</div>
+</div>
 
 </div>
 
-<iframe id="map" class="map"
-src="https://maps.google.com/maps?q=Fethiye&t=&z=13&ie=UTF8&iwloc=&output=embed">
-</iframe>
+<iframe id="map" class="map"></iframe>
 
 <script>
 
-function showPlace(place){
-document.getElementById("map").src =
-"https://maps.google.com/maps?q=" + place + "&z=14&output=embed";
+function show(link){
+document.getElementById("map").src = link + "&output=embed";
+}
+
+function route(link){
+window.open(link, "_blank");
 }
 
 </script>
