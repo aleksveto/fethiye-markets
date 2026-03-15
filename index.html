@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
 
-<meta charset="utf-8"/>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Рынки Фетхие</title>
@@ -20,75 +21,47 @@ background:#f4f6f8;
 
 h1{
 text-align:center;
-font-size:22px;
 margin:10px;
+font-size:22px;
 }
 
 #map{
-height:55vh;
+height:70vh;
 }
 
-.menu{
+.info{
 padding:10px;
-display:flex;
-flex-direction:column;
-gap:8px;
-}
-
-.item{
-background:white;
-border-radius:10px;
-padding:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.15);
-}
-
-.day{
-font-weight:bold;
-font-size:16px;
-margin-bottom:6px;
-}
-
-.desc{
 font-size:14px;
-color:#444;
-margin-bottom:8px;
+text-align:center;
 }
 
-.buttons{
-display:flex;
-gap:6px;
-}
-
-button{
-flex:1;
-padding:10px;
-border:none;
+.label{
+background:white;
+padding:2px 6px;
 border-radius:6px;
-font-size:15px;
-background:#2b7cff;
-color:white;
-}
-
-.route{
-background:#34a853;
+font-size:12px;
+box-shadow:0 1px 4px rgba(0,0,0,0.3);
 }
 
 </style>
+
 </head>
 
 <body>
 
-<h1>Рынки Фетхие</h1>
+<h1>Рынки Фетхие по дням недели</h1>
 
 <div id="map"></div>
 
-<div class="menu" id="list"></div>
+<div class="info">
+Нажмите на метку для описания и кнопки маршрута
+</div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-var map = L.map('map').setView([36.621,29.116],12);
+var map = L.map('map').setView([36.62,29.11],12);
 
 L.tileLayer(
 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -99,101 +72,77 @@ var markets=[
 
 {
 day:"Понедельник",
-name:"Pazaryeri Market",
-coords:[36.621,29.120],
+coords:[36.62158,29.11556],
 route:"https://maps.app.goo.gl/J4Q1PncEETmQRBEW6",
-desc:"Крупный городской рынок."
+desc:"Большой центральный рынок."
 },
 
 {
 day:"Вторник",
-name:"Tuesday Market",
-coords:[36.630,29.110],
+coords:[36.63261,29.11502],
 route:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
-desc:"Популярный продуктовый рынок."
+desc:"Популярный рынок текстиля и овощей."
 },
 
 {
 day:"Четверг — Патлангыч",
-name:"Patlangıç Pazarı",
-coords:[36.640,29.120],
+coords:[36.64075,29.12394],
 route:"https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7",
 desc:"Районный рынок Патлангыч."
 },
 
 {
 day:"Четверг — Чифтлик",
-name:"Çiftlik Pazarı",
-coords:[36.665,29.050],
+coords:[36.66578,29.05536],
 route:"https://maps.app.goo.gl/aaFgXknuASujo5Lb6",
-desc:"Рынок в районе Чифтлик."
+desc:"Рынок района Чифтлик."
 },
 
 {
 day:"Пятница",
-name:"Friday Market",
-coords:[36.630,29.110],
+coords:[36.63261,29.11502],
 route:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
-desc:"Текстиль и овощи."
+desc:"Рынок овощей, фруктов и текстиля."
 },
 
 {
 day:"Суббота — Пазарьери",
-name:"Pazaryeri",
-coords:[36.621,29.120],
+coords:[36.62158,29.11556],
 route:"https://maps.app.goo.gl/XXtjQJLaYwMVeCve9",
-desc:"Большой центральный рынок."
+desc:"Один из крупнейших рынков Фетхие."
 },
 
 {
 day:"Суббота — Чамкёй",
-name:"Çamköy Pazarı",
-coords:[36.650,29.160],
+coords:[36.64840,29.15850],
 route:"https://maps.app.goo.gl/B576Emx2e5BHqqkh8",
 desc:"Рынок района Чамкёй."
 },
 
 {
 day:"Воскресенье",
-name:"Sunday Market",
-coords:[36.615,29.105],
+coords:[36.61470,29.10320],
 route:"https://maps.app.goo.gl/yu5NGyyUathdK2ii8",
-desc:"Воскресный рынок."
+desc:"Воскресный продуктовый рынок."
 }
 
 ];
-
-var list=document.getElementById("list");
 
 markets.forEach(function(m){
 
 var marker=L.marker(m.coords).addTo(map);
 
-marker.bindPopup(
-"<b>"+m.day+"</b><br>"+m.desc+
-"<br><br><a href='"+m.route+"' target='_blank'>Маршрут</a>"
+marker.bindTooltip(
+m.day,
+{permanent:true,direction:"top",className:"label"}
 );
 
-var item=document.createElement("div");
-item.className="item";
-
-item.innerHTML=
-"<div class='day'>"+m.day+"</div>"+
-"<div class='desc'>"+m.desc+"</div>"+
-"<div class='buttons'>"+
-"<button onclick='go("+m.coords+")'>Показать</button>"+
-"<button class='route' onclick=\"window.open('"+m.route+"')\">Маршрут</button>"+
-"</div>";
-
-list.appendChild(item);
+marker.bindPopup(
+"<b>"+m.day+"</b><br>"+m.desc+
+"<br><br><a href='"+m.route+"' target='_blank'>Построить маршрут</a>"
+);
 
 });
-
-function go(coords){
-
-map.setView(coords,15);
-
-}
 
 </script>
 
