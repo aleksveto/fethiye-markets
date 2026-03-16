@@ -23,6 +23,12 @@ margin:10px;
 font-size:22px;
 }
 
+.info{
+padding:10px;
+font-size:14px;
+text-align:center;
+}
+  
 #map{
 height:75vh;
 width:100%;
@@ -49,6 +55,10 @@ font-weight:bold;
 
 <h1>Рынки Фетхие</h1>
 
+<div class="info">
+Нажмите на метку для описания и кнопки маршрута
+</div>
+  
 <div id="map"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/ol@v9.2.4/dist/ol.js"></script>
@@ -60,17 +70,17 @@ var today=new Date().getDay();
 var markets=[
 
 {
-day:1,
+day:1 Monday,
 name:"Понедельник",
-coord:[29.11556,36.62158],
-link:"https://maps.app.goo.gl/J4Q1PncEETmQRBEW6",
+coord:[36.57073720657698, 29.140477593916998],
+route:"https://maps.app.goo.gl/J4Q1PncEETmQRBEW6",
 desc:"Большой центральный рынок"
 },
 
 {
 day:2,
 name:"Вторник",
-coord:[29.11502,36.63261],
+coord:[36.62442126983779, 29.121926155293504],
 link:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
 desc:"Популярный рынок"
 },
@@ -78,7 +88,7 @@ desc:"Популярный рынок"
 {
 day:4,
 name:"Четверг — Патлангыч",
-coord:[29.12394,36.64075],
+coord:[36.61991029393354, 29.142879238097148],
 link:"https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7",
 desc:"Районный рынок"
 },
@@ -86,7 +96,7 @@ desc:"Районный рынок"
 {
 day:4,
 name:"Четверг — Чифтлик",
-coord:[29.05536,36.66578],
+coord:[36.69340806740308, 29.090428641801598],
 link:"https://maps.app.goo.gl/aaFgXknuASujo5Lb6",
 desc:"Рынок района Чифтлик"
 },
@@ -94,7 +104,7 @@ desc:"Рынок района Чифтлик"
 {
 day:5,
 name:"Пятница",
-coord:[29.11502,36.63261],
+coord:[36.62442988040689, 29.12177595158906],
 link:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
 desc:"Овощи и текстиль"
 },
@@ -102,7 +112,7 @@ desc:"Овощи и текстиль"
 {
 day:6,
 name:"Суббота — Пазарьери",
-coord:[29.11556,36.62158],
+coord:[36.62924189855141, 29.145836388360316],
 link:"https://maps.app.goo.gl/XXtjQJLaYwMVeCve9",
 desc:"Крупный рынок"
 },
@@ -110,7 +120,7 @@ desc:"Крупный рынок"
 {
 day:6,
 name:"Суббота — Чамкёй",
-coord:[29.15850,36.64840],
+coord:[36.65962668949437, 29.156176224605243],
 link:"https://maps.app.goo.gl/B576Emx2e5BHqqkh8",
 desc:"Рынок района Чамкёй"
 },
@@ -118,7 +128,7 @@ desc:"Рынок района Чамкёй"
 {
 day:0,
 name:"Воскресенье",
-coord:[29.10320,36.61470],
+coord:[36.65717820505298, 29.12267440742926],
 link:"https://maps.app.goo.gl/yu5NGyyUathdK2ii8",
 desc:"Воскресный рынок"
 }
