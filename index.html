@@ -4,17 +4,19 @@
 <head>
 
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Рынки Фетхие</title>
 
-<link href="https://cdn.jsdelivr.net/npm/ol@v9.2.4/ol.css" rel="stylesheet">
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <style>
 
 body{
 margin:0;
 font-family:Arial;
+background:#f4f6f8;
 }
 
 h1{
@@ -23,227 +25,161 @@ margin:10px;
 font-size:22px;
 }
 
+#map{
+height:70vh;
+}
+
 .info{
 padding:10px;
 font-size:14px;
 text-align:center;
 }
-  
-#map{
-height:75vh;
-width:100%;
-}
 
-.popup{
+.label{
 background:white;
-padding:6px 10px;
+padding:2px 6px;
 border-radius:6px;
-box-shadow:0 2px 6px rgba(0,0,0,0.3);
-font-size:14px;
+font-size:12px;
+box-shadow:0 1px 4px rgba(0,0,0,0.3);
 }
 
-.today{
-color:#0a8a00;
+.today-label{
+background:#0a8a00;
+color:white;
 font-weight:bold;
 }
-
+  
 </style>
 
 </head>
 
 <body>
 
-<h1>Рынки Фетхие</h1>
+<h1>Рынки Фетхие по дням недели</h1>
+
+<div id="map"></div>
 
 <div class="info">
 Нажмите на метку для описания и кнопки маршрута
 </div>
-  
-<div id="map"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/ol@v9.2.4/dist/ol.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
 
-var today=new Date().getDay();
+var map = L.map('map').setView([36.62,29.11],12);
+
+L.tileLayer(
+'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+{maxZoom:19}
+).addTo(map);
+
+/* номер сегодняшнего дня */
+var today = new Date().getDay();
+
+/* соответствие названия дня номеру */
+var dayIndex={
+"Воскресенье":0,
+"Понедельник":1,
+"Вторник":2,
+"Среда":3,
+"Четверг":4,
+"Пятница":5,
+"Суббота":6
+};
 
 var markets=[
 
 {
-day:1,
-name:"Понедельник",
-coord:[19/36.570737, 29.140477],
+day:"Понедельник",
+coords:[36.62158,29.11556],
 route:"https://maps.app.goo.gl/J4Q1PncEETmQRBEW6",
-desc:"Большой центральный рынок"
+desc:"Большой центральный рынок."
 },
 
 {
-day:2,
-name:"Вторник",
-coord:[36.624421, 29.121926],
-link:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
-desc:"Популярный рынок"
+day:"Вторник",
+coords:[36.63261,29.11502],
+route:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
+desc:"Популярный рынок текстиля и овощей."
 },
 
 {
-day:4,
-name:"Четверг — Патлангыч",
-coord:[36.619910, 29.142879],
-link:"https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7",
-desc:"Районный рынок"
+day:"Четверг — Патлангыч",
+coords:[36.64075,29.12394],
+route:"https://maps.app.goo.gl/mSyfS4rwJtZkRyFC7",
+desc:"Районный рынок Патлангыч."
 },
 
 {
-day:4,
-name:"Четверг — Чифтлик",
-coord:[36.693408, 29.090428],
-link:"https://maps.app.goo.gl/aaFgXknuASujo5Lb6",
-desc:"Рынок района Чифтлик"
+day:"Четверг — Чифтлик",
+coords:[36.66578,29.05536],
+route:"https://maps.app.goo.gl/aaFgXknuASujo5Lb6",
+desc:"Рынок района Чифтлик."
 },
 
 {
-day:5,
-name:"Пятница",
-coord:[36.624429, 29.121775],
-link:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
-desc:"Овощи и текстиль"
+day:"Пятница",
+coords:[36.63261,29.11502],
+route:"https://maps.app.goo.gl/JZbgWc18sW277ZUx6",
+desc:"Рынок овощей, фруктов и текстиля."
 },
 
 {
-day:6,
-name:"Суббота — Пазарьери",
-coord:[36.629241, 29.145836],
-link:"https://maps.app.goo.gl/XXtjQJLaYwMVeCve9",
-desc:"Крупный рынок"
+day:"Суббота — Пазарьери",
+coords:[36.62158,29.11556],
+route:"https://maps.app.goo.gl/XXtjQJLaYwMVeCve9",
+desc:"Один из крупнейших рынков Фетхие."
 },
 
 {
-day:6,
-name:"Суббота — Чамкёй",
-coord:[36.659626, 29.156176],
-link:"https://maps.app.goo.gl/B576Emx2e5BHqqkh8",
-desc:"Рынок района Чамкёй"
+day:"Суббота — Чамкёй",
+coords:[36.64840,29.15850],
+route:"https://maps.app.goo.gl/B576Emx2e5BHqqkh8",
+desc:"Рынок района Чамкёй."
 },
 
 {
-day:0,
-name:"Воскресенье",
-coord:[https://www.openstreetmap.org/#map=18/36.657536/29.123002],
-link:"https://maps.app.goo.gl/yu5NGyyUathdK2ii8",
-desc:"Воскресный рынок"
+day:"Воскресенье",
+coords:[36.61470,29.10320],
+route:"https://maps.app.goo.gl/yu5NGyyUathdK2ii8",
+desc:"Воскресный продуктовый рынок."
 }
 
 ];
 
-var features=[];
-
 markets.forEach(function(m){
 
-var feature=new ol.Feature({
+/* определяем номер дня */
+var shortDay = m.day.split(" ")[0];
+var index = dayIndex[shortDay];
 
-geometry:new ol.geom.Point(
-ol.proj.fromLonLat(m.coord)
-),
+/* цвет маркера */
+var icon = (index === today)
+? "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png"
+: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png";
 
-data:m
+var marker = L.marker(m.coords,{icon:L.icon({
 
-});
+iconUrl:icon,
+shadowUrl:"https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+iconSize:[25,41],
+iconAnchor:[12,41]
 
-features.push(feature);
+})}).addTo(map);
 
-});
+/* подсветка подписи */
+var labelClass = (index === today) ? "label today-label" : "label";
 
-var vectorSource=new ol.source.Vector({
+marker.bindTooltip(
+m.day,
+{permanent:true,direction:"top",className:labelClass}
+);
 
-features:features
-
-});
-
-var vectorLayer=new ol.layer.Vector({
-
-source:vectorSource,
-
-style:function(feature){
-
-var d=feature.get("data");
-
-var color=(d.day==today)?"green":"red";
-
-return new ol.style.Style({
-
-image:new ol.style.Circle({
-
-radius:7,
-
-fill:new ol.style.Fill({color:color}),
-
-stroke:new ol.style.Stroke({color:"#fff",width:2})
-
-})
-
-});
-
-}
-
-});
-
-var map=new ol.Map({
-
-target:"map",
-
-layers:[
-
-new ol.layer.Tile({
-
-source:new ol.source.OSM()
-
-}),
-
-vectorLayer
-
-],
-
-view:new ol.View({
-
-center:ol.proj.fromLonLat([29.11,36.62]),
-
-zoom:12
-
-})
-
-});
-
-map.on("click",function(evt){
-
-map.forEachFeatureAtPixel(evt.pixel,function(feature){
-
-var d=feature.get("data");
-
-var html=
-
-"<div class='popup'>"+
-
-"<b class='"+(d.day==today?"today":"")+"'>"+d.name+"</b><br>"+
-
-d.desc+
-
-"<br><br><a href='"+d.link+"' target='_blank'>Маршрут</a>"+
-
-"</div>";
-
-var overlay=new ol.Overlay({
-
-element:document.createElement("div"),
-
-position:evt.coordinate
-
-});
-
-overlay.getElement().innerHTML=html;
-
-map.addOverlay(overlay);
-
-});
+marker.bindPopup(
+"<b>"+m.day+"</b><br>"+m.desc+
+"<br><br><a href='"+m.route+"' target='_blank'>Построить маршрут</a>"
+);
 
 });
 
