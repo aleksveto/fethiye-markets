@@ -59,14 +59,24 @@ height:calc(70vh - 50px);
 position:relative;
 }
 
+.chat-bg{
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:50px;
+background:white;
+z-index:900;
+}
+  
 .chat-button{
 position:absolute;
-bottom:6px;
+bottom:8px;
 left:50%;
 transform:translateX(-50%);
 background:#2b7cff;
 color:white;
-padding:8px 14px;
+padding:8px 16px;
 border-radius:8px;
 font-size:14px;
 text-decoration:none;
@@ -89,7 +99,7 @@ z-index:1000;
 
 <div class="map-container">
 <div id="map"></div>
-
+<div class="chat-bg"></div>
 <a class="chat-button"
 href="https://t.me/fethiye_oludeniz"
 target="_blank">
