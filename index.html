@@ -48,6 +48,32 @@ background:#0a8a00;
 color:white;
 font-weight:bold;
 }
+
+.bottom-bar{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:white;
+padding:10px;
+box-shadow:0 -2px 6px rgba(0,0,0,0.2);
+text-align:center;
+z-index:1000;
+}
+
+.chat-button{
+display:inline-block;
+padding:10px 16px;
+background:#2b7cff;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-size:15px;
+}
+
+#map{
+height:calc(70vh - 50px);
+}
   
 </style>
 
@@ -186,5 +212,17 @@ marker.bindPopup(
 
 </script>
 
+<div class="bottom-bar">
+
+<a class="chat-button"
+href="ССЫЛКА_НА_ВАШ_ЧАТ"
+target="_blank">
+
+Чат Фетхие – Олюдениз
+
+</a>
+
+</div>
+  
 </body>
 </html>
