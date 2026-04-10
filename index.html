@@ -90,19 +90,39 @@ box-shadow:0 2px 6px rgba(0,0,0,0.3);
 z-index:1001;
 }
 
-.share-button{
+.share-panel{
+
 position:fixed;
 bottom:8px;
 left:50%;
+
 transform:translateX(-50%);
-background:#0099cc;
+
+display:flex;
+gap:8px;
+
+background:#f4f6f8;
+padding:4px;
+
+z-index:1500;
+
+}
+
+.share-btn{
+
+background:#2b7cff;
 color:white;
-padding:8px 16px;
+
+padding:8px 14px;
+
 border-radius:8px;
 font-size:14px;
+
 text-decoration:none;
+border:none;
+
 box-shadow:0 2px 6px rgba(0,0,0,0.3);
-z-index:1500;
+
 }
   
 </style>
@@ -255,38 +275,33 @@ marker.bindPopup(
 </script>
 
  
-<a class="share-button"
+<div class="share-panel">
+
+<a class="share-btn"
 href="https://t.me/share/url?url=https://aleksveto.github.io/fethiye-markets/&text=Карта%20рынков%20Фетхие"
 target="_blank">
 
-📤 Поделиться
+Поделиться в Telegram
 
 </a>
 
+<button class="share-btn" onclick="copyLink()">
+
+Скопировать ссылку
+
+</button>
+
+</div>
+
 <script>
 
-document.getElementById("shareButton").addEventListener("click", async function(){
-
-const shareData = {
-title: "Рынки Фетхие",
-text: "Карта рынков Фетхие по дням недели",
-url: window.location.href
-};
-
-if (navigator.share) {
-
-try {
-await navigator.share(shareData);
-} catch(err) {}
-
-} else {
+function copyLink(){
 
 navigator.clipboard.writeText(window.location.href);
+
 alert("Ссылка скопирована");
 
 }
-
-});
 
 </script>
   
