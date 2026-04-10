@@ -89,6 +89,20 @@ text-decoration:none;
 box-shadow:0 2px 6px rgba(0,0,0,0.3);
 z-index:1001;
 }
+
+.share-bar{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#2b7cff;
+color:white;
+text-align:center;
+padding:12px;
+font-size:16px;
+cursor:pointer;
+z-index:1200;
+}
   
 </style>
 
@@ -239,6 +253,35 @@ marker.bindPopup(
 
 </script>
 
+<script>
+
+function sharePage(){
+
+if(navigator.share){
+
+navigator.share({
+title:"Рынки Фетхие",
+text:"Карта рынков Фетхие по дням недели",
+url:window.location.href
+});
+
+}else{
+
+navigator.clipboard.writeText(window.location.href);
+alert("Ссылка скопирована");
+
+}
+
+}
+
+</script>
+  
+<div class="share-bar" onclick="sharePage()">
+📤 Поделиться
+</div>
+  
+<script data-goatcounter="https://aleksvet.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>  
 
 </body>
 </html>
