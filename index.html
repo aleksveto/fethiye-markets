@@ -90,17 +90,19 @@ box-shadow:0 2px 6px rgba(0,0,0,0.3);
 z-index:1001;
 }
 
-.share-bar{
+.share-button{
 position:fixed;
-bottom:0;
-left:0;
-width:100%;
+bottom:8px;
+left:50%;
+transform:translateX(-50%);
 background:#0099cc;
 color:white;
-border:none;
-padding:14px;
-font-size:16px;
-z-index:2000;
+padding:8px 16px;
+border-radius:8px;
+font-size:14px;
+text-decoration:none;
+box-shadow:0 2px 6px rgba(0,0,0,0.3);
+z-index:1500;
 }
   
 </style>
@@ -253,9 +255,13 @@ marker.bindPopup(
 </script>
 
  
-<button class="share-bar" id="shareButton">
+<a class="share-button"
+href="https://t.me/share/url?url=https://aleksveto.github.io/fethiye-markets/&text=Карта%20рынков%20Фетхие"
+target="_blank">
+
 📤 Поделиться
-</button>
+
+</a>
 
 <script>
 
