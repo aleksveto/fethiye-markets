@@ -44,7 +44,7 @@ box-shadow:0 1px 4px rgba(0,0,0,0.3);
 }
 
 .today-label{
-background:#0a8a00;
+background:#339933;
 color:white;
 font-weight:bold;
 }
@@ -112,6 +112,10 @@ text-decoration:none;
 border:none;
 box-shadow:0 2px 6px rgba(0,0,0,0.3);
 }
+
+html, body{
+min-height:100vh;
+}  
   
 </style>
 
@@ -261,36 +265,26 @@ marker.bindPopup(
 });
 
 </script>
-
  
 <div class="share-panel">
 
 <a class="share-btn"
 href="https://t.me/share/url?url=https://aleksveto.github.io/fethiye-markets/&text=Карта%20рынков%20Фетхие"
 target="_blank">
-
 Поделиться в Telegram
-
 </a>
 
 <button class="share-btn" onclick="copyLink()">
-
 Скопировать ссылку
-
 </button>
 
 </div>
 
 <script>
-
 function copyLink(){
-
 navigator.clipboard.writeText(window.location.href);
-
 alert("Ссылка скопирована");
-
 }
-
 </script>
   
 <script data-goatcounter="https://aleksvet.goatcounter.com/count"
