@@ -252,32 +252,37 @@ marker.bindPopup(
 
 </script>
 
+ 
+<button class="share-bar" id="shareButton">
+📤 Поделиться
+</button>
+
 <script>
 
-function sharePage(){
+document.getElementById("shareButton").addEventListener("click", async function(){
 
-if(navigator.share){
+const shareData = {
+title: "Рынки Фетхие",
+text: "Карта рынков Фетхие по дням недели",
+url: window.location.href
+};
 
-navigator.share({
-title:"Рынки Фетхие",
-text:"Карта рынков Фетхие по дням недели",
-url:window.location.href
-});
+if (navigator.share) {
 
-}else{
+try {
+await navigator.share(shareData);
+} catch(err) {}
+
+} else {
 
 navigator.clipboard.writeText(window.location.href);
 alert("Ссылка скопирована");
 
 }
 
-}
+});
 
 </script>
-  
-<button class="share-bar" id="shareButton">
-📤 Поделиться
-</button>
   
 <script data-goatcounter="https://aleksvet.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>  
