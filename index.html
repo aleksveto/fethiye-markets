@@ -259,29 +259,6 @@ marker.bindPopup(
 
 <script>
 
-function sharePage(){
-
-if(navigator.share){
-
-navigator.share({
-title:"Рынки Фетхие",
-text:"Карта рынков Фетхие по дням недели",
-url:window.location.href
-});
-
-}else{
-
-navigator.clipboard.writeText(window.location.href);
-alert("Ссылка скопирована");
-
-}
-
-}
-
-</script>
-  
-<script>
-
 document.getElementById("shareButton").addEventListener("click", async function(){
 
 const shareData = {
